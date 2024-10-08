@@ -1,5 +1,5 @@
-import PostMenu from "./PostMenu";
 import PostUserInfo from "./PostUserInfo";
+import PostMenu from "./Post/PostMenu";
 import PostLikes from "./Post/PostLikes";
 import { Post } from "../types/globals";
 

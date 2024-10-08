@@ -11,6 +11,9 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 
 import "./styles.css";
+import { ForumProvider } from "./context/forumContext.tsx";
+import { PostsProvider } from "./context/postsContext.tsx";
+import { UserProvider } from "./context/userContext.tsx";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +59,12 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <ForumProvider>
+        <PostsProvider>
+          <RouterProvider router={router} />
+        </PostsProvider>
+      </ForumProvider>
+    </UserProvider>
   </React.StrictMode>
 );

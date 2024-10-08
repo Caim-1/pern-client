@@ -1,14 +1,11 @@
-import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { Post } from "../types/globals";
-
-type Props = {
-  posts: Post[];
-  sortOption: string;
-  handleChangeSortOption: (e: SelectChangeEvent<string>) => void;
-};
+import { useContext } from "react";
+import { PostsContext } from "../context/postsContext";
+import { MenuItem, Select } from "@mui/material";
 
 // Child of ForumPage.tsx
-const SortSelect = ({ posts, sortOption, handleChangeSortOption }: Props) => {
+const SortSelect = () => {
+  const { posts, sortOption, handleChangeSortOption } = useContext(PostsContext);
+
   return (
     <Select
       id="sort-select"
@@ -16,7 +13,7 @@ const SortSelect = ({ posts, sortOption, handleChangeSortOption }: Props) => {
       onChange={(e) => handleChangeSortOption(e)}
       className="hover:bg-gray-200"
       sx={{ "& fieldset": { border: "0px solid black" }, fontSize: "0.875rem", borderRadius: "9999px", width: "80px" }}
-      disabled={posts.length < 2}
+      disabled={posts && posts.length < 2}
     >
       <MenuItem disabled sx={{ color: "black" }}>
         Sort by
