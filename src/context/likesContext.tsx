@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
-type Props = {
+interface LikesContext {
   liked: boolean;
   setLiked: (value: boolean) => void;
   disliked: boolean;
@@ -11,9 +11,12 @@ type Props = {
   removeLikeFromPost: (userId: number, postId: number) => void;
   dislikePost: (userId: number, postId: number) => void;
   removeDislikeFromPost: (userId: number, postId: number) => void;
-};
+  checkLikeStatus: (userId: number, postId: number) => void;
+}
 
-const useLikes = (): Props => {
+export const LikesContext = createContext<LikesContext>({} as LikesContext);
+
+export const LikesProvider = ({ children }: { children: ReactNode }) => {
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -126,18 +129,51 @@ const useLikes = (): Props => {
     }
   };
 
-  return {
-    liked,
-    setLiked,
-    disliked,
-    setDisliked,
-    loading,
-    setLoading,
-    likePost,
-    removeLikeFromPost,
-    dislikePost,
-    removeDislikeFromPost,
-  };
-};
+  const checkLikeStatus = async (userId: number, postId: number) => {
+    try {
+      const userLikedPostsResById = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/api/users/post/likes/${userId}/${postId}`,
+        {
+          method: "GET",
+        }
+      );
+      const userDislikedPostsResById = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/api/users/post/dislikes/${userId}/${postId}`,
+        {
+          method: "GET",
+        }
+      );
 
-export default useLikes;
+      const data1 = await userLikedPostsResById.json();
+      const data2 = await userDislikedPostsResById.json();
+
+      if (data1.length > 0) {
+        setLiked(true);
+      } else if (data2.length > 0) {
+        setDisliked(false);
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  return (
+    <LikesContext.Provider
+      value={{
+        liked,
+        setLiked,
+        disliked,
+        setDisliked,
+        loading,
+        setLoading,
+        likePost,
+        removeLikeFromPost,
+        dislikePost,
+        removeDislikeFromPost,
+        checkLikeStatus,
+      }}
+    >
+      {children}
+    </LikesContext.Provider>
+  );
+};

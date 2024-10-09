@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
-import { SelectChangeEvent } from "@mui/material";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { Post } from "../types/globals";
+import { SelectChangeEvent } from "@mui/material";
 
-type Props = {
-  posts: Post[];
+interface PostsContext {
+  posts: Post[] | undefined;
   setPosts: (posts: Post[]) => void;
   getPosts: (forumName: string) => void;
   sortOption: string;
   sortPosts: () => void;
   handleChangeSortOption: (e: SelectChangeEvent<string>) => void;
-};
+}
 
-const usePosts = (): Props => {
-  const [posts, setPosts] = useState<Post[]>([]);
+export const PostsContext = createContext<PostsContext>({} as PostsContext);
+
+export const PostsProvider = ({ children }: { children: ReactNode }) => {
+  const [posts, setPosts] = useState<Post[] | undefined>([]);
   const [sortOption, setSortOption] = useState<string>("new");
 
   useEffect(() => {
@@ -39,13 +41,15 @@ const usePosts = (): Props => {
   };
 
   const sortPosts = () => {
+    if (!posts) {
+      return;
+    }
+
     if (sortOption === "new") {
       const sortedPosts = sortByNew(posts);
-
       return setPosts([...sortedPosts]);
     } else if (sortOption === "old") {
       const sortedPosts = sortByOld(posts);
-
       return setPosts([...sortedPosts]);
     } else if (sortOption === "top") {
     }
@@ -67,7 +71,9 @@ const usePosts = (): Props => {
     return setSortOption(e.target.value);
   };
 
-  return { posts, setPosts, getPosts, sortOption, sortPosts, handleChangeSortOption };
+  return (
+    <PostsContext.Provider value={{ posts, setPosts, getPosts, sortOption, sortPosts, handleChangeSortOption }}>
+      {children}
+    </PostsContext.Provider>
+  );
 };
-
-export default usePosts;

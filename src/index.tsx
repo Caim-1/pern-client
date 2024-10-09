@@ -1,7 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import { ForumProvider } from "./context/forumContext.tsx";
+import { PostsProvider } from "./context/postsContext.tsx";
+import { UserProvider } from "./context/userContext.tsx";
+import { LikesProvider } from "./context/likesContext.tsx";
 import Root from "./pages/root.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import UserPage from "./pages/UserPage.tsx";
@@ -9,7 +12,6 @@ import ForumPage from "./pages/ForumPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
-
 import "./styles.css";
 
 const router = createBrowserRouter([
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <ForumProvider>
+        <PostsProvider>
+          <LikesProvider>
+            <RouterProvider router={router} />
+          </LikesProvider>
+        </PostsProvider>
+      </ForumProvider>
+    </UserProvider>
   </React.StrictMode>
 );

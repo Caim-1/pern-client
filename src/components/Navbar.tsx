@@ -1,12 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { User } from "../types/globals";
+import { UserContext } from "../context/userContext";
 import Blank_Pfp from "../assets/Blank_Pfp.png";
 
-type Props = {
-  user: User | null;
-};
+const Navbar = () => {
+  const { user } = useContext(UserContext);
 
-const Navbar = ({ user }: Props) => {
   return (
     <header className="flex items-center h-16 p-4">
       <nav className="flex justify-between w-full">

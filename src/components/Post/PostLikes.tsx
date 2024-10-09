@@ -1,11 +1,12 @@
+import { useContext, useEffect } from "react";
+import { LikesContext } from "../../context/likesContext";
 import Loading from "../Loading";
-import useLikes from "../../hooks/useLikes";
 import { Post } from "../../types/globals";
 import { BiUpvote } from "react-icons/bi";
 import { BiDownvote } from "react-icons/bi";
 import { BiSolidUpvote } from "react-icons/bi";
 import { BiSolidDownvote } from "react-icons/bi";
-import { useEffect } from "react";
+import { PostsContext } from "../../context/postsContext";
 
 type Props = {
   post: Post;
@@ -15,50 +16,22 @@ type Props = {
 const PostLikes = ({ post }: Props) => {
   const {
     liked,
-    setLiked,
     disliked,
-    setDisliked,
     loading,
     setLoading,
     likePost,
     removeLikeFromPost,
     dislikePost,
     removeDislikeFromPost,
-  } = useLikes();
+    checkLikeStatus,
+  } = useContext(LikesContext);
+  const { sortOption } = useContext(PostsContext);
   const userId = post.user_id;
   const postId = post.id;
 
   useEffect(() => {
-    checkLikeStatus();
+    checkLikeStatus(userId, postId);
   }, [post]);
-
-  const checkLikeStatus = async () => {
-    try {
-      const userLikedPostsResById = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/api/users/post/likes/${userId}/${postId}`,
-        {
-          method: "GET",
-        }
-      );
-      const userDislikedPostsResById = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/api/users/post/dislikes/${userId}/${postId}`,
-        {
-          method: "GET",
-        }
-      );
-
-      const data1 = await userLikedPostsResById.json();
-      const data2 = await userDislikedPostsResById.json();
-
-      if (data1.length > 0) {
-        setLiked(!liked);
-      } else if (data2.length > 0) {
-        setDisliked(!disliked);
-      }
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
 
   const handleLike = async () => {
     setLoading(true);

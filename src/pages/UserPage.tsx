@@ -1,13 +1,11 @@
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useUser } from "./root";
-import { useEffect, useState } from "react";
-import { User } from "../types/globals";
+import { UserContext } from "../context/userContext";
 import Blank_Pfp from "../assets/Blank_Pfp.png";
 
 const UserPage = () => {
   const location = useLocation();
-  const { currentUser } = useUser();
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useContext(UserContext);
   const [userCurrentlyLoggedIn, setUserCurrentlyLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -15,26 +13,12 @@ const UserPage = () => {
     const pathSplit = path.split("/");
     const userIdFromURL = parseInt(pathSplit[2]);
 
-    if (currentUser?.id === userIdFromURL) {
-      setUser(currentUser);
+    if (user?.id === userIdFromURL) {
       setUserCurrentlyLoggedIn(true);
     } else {
-      getUser(userIdFromURL);
       setUserCurrentlyLoggedIn(false);
     }
   }, []);
-
-  const getUser = async (id: number) => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/users/${id}`, {
-        method: "GET",
-      });
-      const data = await res.json();
-      setUser(data);
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
 
   return (
     <div className="flex flex-col w-full p-4">
