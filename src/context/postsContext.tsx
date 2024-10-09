@@ -47,11 +47,9 @@ export const PostsProvider = ({ children }: { children: ReactNode }) => {
 
     if (sortOption === "new") {
       const sortedPosts = sortByNew(posts);
-
       return setPosts([...sortedPosts]);
     } else if (sortOption === "old") {
       const sortedPosts = sortByOld(posts);
-
       return setPosts([...sortedPosts]);
     } else if (sortOption === "top") {
     }
