@@ -1,11 +1,15 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { ForumContext } from "../../context/forumContext";
 import { Button } from "@mui/material";
 import Default_banner from "../../assets/Default_banner.jpg";
 import Default_icon from "../../assets/Default_icon.png";
-import { ForumContext } from "../../context/forumContext";
 
 const ForumBanner = () => {
-  const { forum, subscribeToForum } = useContext(ForumContext);
+  const { forum, subscribeToForum, checkIfUserIsSubscribed, userIsSubscribed, loading } = useContext(ForumContext);
+
+  useEffect(() => {
+    checkIfUserIsSubscribed();
+  }, [forum]);
 
   return (
     <div className="w-full" style={{ height: "200px" }}>
@@ -27,8 +31,8 @@ const ForumBanner = () => {
           <Button variant="outlined" onClick={() => console.log("Create")} style={{ minWidth: 86 }}>
             Create Post
           </Button>
-          <Button variant="outlined" onClick={() => subscribeToForum()} style={{ minWidth: 86 }}>
-            Subscribe
+          <Button variant="outlined" onClick={() => subscribeToForum()} style={{ minWidth: 86 }} disabled={loading}>
+            {userIsSubscribed ? "Joined" : "Subscribe"}
           </Button>
         </div>
       </div>

@@ -6,7 +6,6 @@ import { BiUpvote } from "react-icons/bi";
 import { BiDownvote } from "react-icons/bi";
 import { BiSolidUpvote } from "react-icons/bi";
 import { BiSolidDownvote } from "react-icons/bi";
-import { PostsContext } from "../../context/postsContext";
 
 type Props = {
   post: Post;
@@ -25,7 +24,6 @@ const PostLikes = ({ post }: Props) => {
     removeDislikeFromPost,
     checkLikeStatus,
   } = useContext(LikesContext);
-  const { sortOption } = useContext(PostsContext);
   const userId = post.user_id;
   const postId = post.id;
 

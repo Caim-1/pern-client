@@ -30,8 +30,7 @@ const ForumPage = () => {
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col gap-4 p-5" style={{ margin: "0 auto", minWidth: "1120px" }}>
-        <ForumBanner />
-
+        {forum && <ForumBanner />}
         <div className="flex gap-4">
           <main className="flex-1 flex flex-col gap-2 max-w-3xl">
             <SortSelect />
@@ -45,7 +44,7 @@ const ForumPage = () => {
             )}
           </main>
 
-          {forum && posts && <SidebarRight forum={forum} numberOfPosts={posts.length} />}
+          {forum && posts && <SidebarRight numberOfPosts={posts.length} />}
         </div>
       </div>
     </div>
