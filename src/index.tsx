@@ -12,6 +12,7 @@ import ForumPage from "./pages/ForumPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
+import CreatePost from "./components/CreatePost.tsx";
 import "./styles.css";
 
 const router = createBrowserRouter([
@@ -35,12 +36,16 @@ const router = createBrowserRouter([
       {
         path: "forum/:forumname",
         element: <ForumPage />,
-        // children:[
-        //   {
-        //     path: "forum/:forumname/post/:postid",
-        //     element: <PostPage />,
-        //   }
-        // ]
+        children: [
+          //   {
+          //     path: "forum/:forumname/post/:postid",
+          //     element: <PostPage />,
+          //   }
+        ],
+      },
+      {
+        path: "forum/:forumname/submit",
+        element: <CreatePost />,
       },
     ],
   },

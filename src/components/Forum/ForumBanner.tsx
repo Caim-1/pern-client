@@ -1,10 +1,12 @@
 import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ForumContext } from "../../context/forumContext";
 import { Button } from "@mui/material";
 import Default_banner from "../../assets/Default_banner.jpg";
 import Default_icon from "../../assets/Default_icon.png";
 
 const ForumBanner = () => {
+  const navigate = useNavigate();
   const { forum, subscribeToForum, checkIfUserIsSubscribed, userIsSubscribed, loading } = useContext(ForumContext);
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const ForumBanner = () => {
         </div>
 
         <div className="flex items-end gap-4">
-          <Button variant="outlined" onClick={() => console.log("Create")} style={{ minWidth: 86 }}>
+          <Button variant="outlined" onClick={() => navigate(`/forum/${forum?.name}/submit`)} style={{ minWidth: 86 }}>
             Create Post
           </Button>
           <Button variant="outlined" onClick={() => subscribeToForum()} style={{ minWidth: 86 }} disabled={loading}>

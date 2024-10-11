@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { UserContext } from "../context/userContext";
+import { jwtDecode } from "jwt-decode";
 
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
