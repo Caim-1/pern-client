@@ -26,3 +26,8 @@ export type Post = {
   likes: number;
   dislikes: number;
 };
+
+export type ForumUserRelation = {
+  forum_id: number;
+  user_id: number;
+};
