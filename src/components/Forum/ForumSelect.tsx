@@ -1,17 +1,24 @@
 import { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { MenuItem, Select } from "@mui/material";
 import { Forum, ForumUserRelation } from "../../types/globals";
 
 // Child of CreatePost.tsx
 const ForumSelect = () => {
+  const location = useLocation();
   const { user } = useContext(UserContext);
   const [forums, setForums] = useState<Forum[]>([]);
+  const [forumName, setForumName] = useState<string>("");
 
   useEffect(() => {
     setForums([]);
     getSubscribedForums();
   }, [user]);
+
+  useEffect(() => {
+    getForumNameFromUrl();
+  }, [forums]);
 
   /**
    * Get all forums to which the current user is subscribed to.
@@ -56,20 +63,28 @@ const ForumSelect = () => {
     }
   };
 
+  const getForumNameFromUrl = () => {
+    const path = location.pathname;
+    const pathSplit = path.split("/");
+    const forumNameFromURL = pathSplit[2];
+    return setForumName(forumNameFromURL);
+  };
+
   return (
     <Select
       id="sort-select"
-      value={"new"}
+      value={forumName}
       // onChange={(e) => handleChangeSortOption(e)}
       className="hover:bg-gray-200"
-      sx={{ "& fieldset": { border: "0px solid black" }, fontSize: "0.875rem", borderRadius: "9999px", width: "80px" }}
-      // disabled={posts && posts.length < 2}
+      sx={{ "& fieldset": { border: "0px solid black" }, fontSize: "0.875rem", borderRadius: "9999px", width: "200px" }}
     >
       <MenuItem disabled sx={{ color: "black" }}>
         Subscribed forums
       </MenuItem>
       {forums.map((forum: Forum) => (
-        <MenuItem value={forum.name}>{forum.name}</MenuItem>
+        <MenuItem value={forum.name} key={forum as any}>
+          {forum.name}
+        </MenuItem>
       ))}
       {/* <MenuItem value={"new"}>New</MenuItem> */}
       {/* <MenuItem value={"old"}>Old</MenuItem> */}
