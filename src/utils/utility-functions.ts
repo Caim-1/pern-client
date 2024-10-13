@@ -1,8 +1,8 @@
-export const capitalizeFirstLetter = (string: String) => {
+export const capitalizeFirstLetter = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-export const formatDateSince = (isoDate: string) => {
+export const formatDateSince = (isoDate: string): string => {
   const data = {
     formattedDate: isoDate,
   };
@@ -32,4 +32,11 @@ export const formatDateSince = (isoDate: string) => {
     return Math.floor(interval) + " minutes";
   }
   return Math.floor(seconds) + " seconds";
+};
+
+export const getForumNameFromUrl = (location: any): string => {
+  const path = location.pathname;
+  const pathSplit = path.split("/");
+  const forumNameFromURL = pathSplit[2];
+  return forumNameFromURL;
 };

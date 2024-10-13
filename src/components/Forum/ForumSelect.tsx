@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { MenuItem, Select } from "@mui/material";
 import { Forum, ForumUserRelation } from "../../types/globals";
+import { getForumNameFromUrl } from "../../utils/utility-functions";
 
 // Child of CreatePost.tsx
 const ForumSelect = () => {
@@ -17,7 +18,8 @@ const ForumSelect = () => {
   }, [user]);
 
   useEffect(() => {
-    getForumNameFromUrl();
+    const name = getForumNameFromUrl(location);
+    setForumName(name);
   }, [forums]);
 
   /**
@@ -63,19 +65,12 @@ const ForumSelect = () => {
     }
   };
 
-  const getForumNameFromUrl = () => {
-    const path = location.pathname;
-    const pathSplit = path.split("/");
-    const forumNameFromURL = pathSplit[2];
-    return setForumName(forumNameFromURL);
-  };
-
   return (
     <Select
       id="sort-select"
-      value={forumName}
+      value={forumName ? forumName : ""}
       // onChange={(e) => handleChangeSortOption(e)}
-      className="hover:bg-gray-200"
+      className="bg-gray-200 hover:bg-gray-300"
       sx={{ "& fieldset": { border: "0px solid black" }, fontSize: "0.875rem", borderRadius: "9999px", width: "200px" }}
     >
       <MenuItem disabled sx={{ color: "black" }}>
