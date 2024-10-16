@@ -46,7 +46,7 @@ export const ForumProvider = ({ children }: { children: ReactNode }) => {
 
   const getForumSubscribers = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/forums/subscribers`, {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/forums/subscribers/forum/${forum?.id}`, {
         method: "GET",
       });
       const data = await res.json();
