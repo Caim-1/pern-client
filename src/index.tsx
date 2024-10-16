@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ForumProvider } from "./context/forumContext.tsx";
 import { PostsProvider } from "./context/postsContext.tsx";
 import { UserProvider } from "./context/userContext.tsx";
-import { LikesProvider } from "./context/likesContext.tsx";
 import Root from "./pages/root.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import UserPage from "./pages/UserPage.tsx";
@@ -66,9 +65,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <UserProvider>
       <ForumProvider>
         <PostsProvider>
-          <LikesProvider>
-            <RouterProvider router={router} />
-          </LikesProvider>
+          <RouterProvider router={router} />
         </PostsProvider>
       </ForumProvider>
     </UserProvider>

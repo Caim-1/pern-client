@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useState } from "react";
+import { useState } from "react";
 
-interface LikesContext {
+type Props = {
   liked: boolean;
   setLiked: (value: boolean) => void;
   disliked: boolean;
@@ -12,11 +12,9 @@ interface LikesContext {
   dislikePost: (userId: number, postId: number) => void;
   removeDislikeFromPost: (userId: number, postId: number) => void;
   checkLikeStatus: (userId: number, postId: number) => void;
-}
+};
 
-export const LikesContext = createContext<LikesContext>({} as LikesContext);
-
-export const LikesProvider = ({ children }: { children: ReactNode }) => {
+const useLikes = (): Props => {
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -157,23 +155,19 @@ export const LikesProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  return (
-    <LikesContext.Provider
-      value={{
-        liked,
-        setLiked,
-        disliked,
-        setDisliked,
-        loading,
-        setLoading,
-        likePost,
-        removeLikeFromPost,
-        dislikePost,
-        removeDislikeFromPost,
-        checkLikeStatus,
-      }}
-    >
-      {children}
-    </LikesContext.Provider>
-  );
+  return {
+    liked,
+    setLiked,
+    disliked,
+    setDisliked,
+    loading,
+    setLoading,
+    likePost,
+    removeLikeFromPost,
+    dislikePost,
+    removeDislikeFromPost,
+    checkLikeStatus,
+  };
 };
+
+export default useLikes;

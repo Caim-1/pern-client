@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import { LikesContext } from "../../context/likesContext";
+import { useEffect } from "react";
+import useLikes from "../../hooks/useLikes";
 import Loading from "../Loading";
 import { Post } from "../../types/globals";
 import { BiUpvote } from "react-icons/bi";
@@ -23,7 +23,7 @@ const PostLikes = ({ post }: Props) => {
     dislikePost,
     removeDislikeFromPost,
     checkLikeStatus,
-  } = useContext(LikesContext);
+  } = useLikes();
   const userId = post.user_id;
   const postId = post.id;
 
