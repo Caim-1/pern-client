@@ -44,7 +44,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "forum/:forumname/submit",
+        path: "submit",
         element: <CreatePost />,
       },
     ],
