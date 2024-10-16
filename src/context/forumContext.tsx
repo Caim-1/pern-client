@@ -21,7 +21,7 @@ export const ForumProvider = ({ children }: { children: ReactNode }) => {
   const [forum, setForum] = useState<Forum | undefined>(undefined);
   const [forumSubscribers, setForumSubscribers] = useState<[] | undefined>(undefined);
   const [userIsSubscribed, setUserIsSubscribed] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
 
   useEffect(() => {
@@ -61,6 +61,8 @@ export const ForumProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
+    setLoading(true);
+
     try {
       const res = await fetch(
         `${import.meta.env.VITE_SERVER_URL}/api/forums/subscribers/forum/${forum?.id}/${user?.id}`,
@@ -76,6 +78,8 @@ export const ForumProvider = ({ children }: { children: ReactNode }) => {
     } catch (error: any) {
       console.log(error.message);
     }
+
+    setLoading(false);
   };
 
   const subscribeToForum = async () => {
