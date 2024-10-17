@@ -8,6 +8,7 @@ import PostCard from "../components/PostCard";
 import PostsMissing from "../components/Post/PostsMissing";
 import SortSelect from "../components/SortSelect";
 import SidebarRight from "../components/SidebarRight";
+import ReactLoading from "react-loading";
 import { Post } from "../types/globals";
 
 const ForumPage = () => {
@@ -34,23 +35,31 @@ const ForumPage = () => {
   return (
     <div className="flex flex-col w-full">
       <div className="flex flex-col gap-4 p-5" style={{ margin: "0 auto", minWidth: "1120px" }}>
-        {forum && <ForumBanner />}
+        {forum ? (
+          <>
+            <ForumBanner />
 
-        <div className="flex gap-4">
-          <main className="flex-1 flex flex-col gap-2 max-w-3xl">
-            <SortSelect />
+            <div className="flex gap-4">
+              <main className="flex-1 flex flex-col gap-2 max-w-3xl">
+                <SortSelect />
 
-            {posts && (
-              <div className="flex flex-col">
-                {posts.length < 1 && <PostsMissing />}
-                {posts.length > 0 &&
-                  posts.map((post: Post, index: number) => <PostCard post={post} key={`${post}` + index} />)}
-              </div>
-            )}
-          </main>
+                {posts && (
+                  <div className="flex flex-col">
+                    {posts.length < 1 && <PostsMissing />}
+                    {posts.length > 0 &&
+                      posts.map((post: Post, index: number) => (
+                        <PostCard post={post} forumName={forum.name} key={`${post}` + index} />
+                      ))}
+                  </div>
+                )}
+              </main>
 
-          {forum && posts && <SidebarRight numberOfPosts={posts.length} />}
-        </div>
+              {posts && <SidebarRight numberOfPosts={posts.length} />}
+            </div>
+          </>
+        ) : (
+          <ReactLoading type={"spin"} color={"black"} height={64} width={64} className="m-auto" />
+        )}
       </div>
     </div>
   );
