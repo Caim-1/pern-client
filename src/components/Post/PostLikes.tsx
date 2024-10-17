@@ -42,6 +42,7 @@ const PostLikes = ({ post }: Props) => {
 
     if (disliked) {
       removeDislikeFromPost(userId, postId);
+      post.dislikes--;
     }
 
     likePost(userId, postId);
@@ -59,6 +60,7 @@ const PostLikes = ({ post }: Props) => {
 
     if (liked) {
       removeLikeFromPost(userId, postId);
+      post.likes--;
     }
 
     dislikePost(userId, postId);
@@ -69,6 +71,9 @@ const PostLikes = ({ post }: Props) => {
     <div
       className="flex items-center gap-2 rounded-2xl max-w-min bg-gray-300"
       // style={liked ? { backgroundColor: "rgb(249 115 22)" } : {}}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     >
       {loading ? (
         <Loading />
