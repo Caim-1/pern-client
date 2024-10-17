@@ -8,6 +8,7 @@ import Root from "./pages/root.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import UserPage from "./pages/UserPage.tsx";
 import ForumPage from "./pages/ForumPage.tsx";
+import PostPage from "./pages/PostPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
@@ -35,12 +36,10 @@ const router = createBrowserRouter([
       {
         path: "forum/:forumname",
         element: <ForumPage />,
-        children: [
-          //   {
-          //     path: "forum/:forumname/post/:postid",
-          //     element: <PostPage />,
-          //   }
-        ],
+      },
+      {
+        path: "forum/:forumname/post/:id",
+        element: <PostPage />,
       },
       {
         path: "submit",

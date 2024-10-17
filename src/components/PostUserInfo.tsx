@@ -36,7 +36,13 @@ const PostUserInfo = ({ post }: Props) => {
 
   return (
     <div className="flex gap-2 items-center">
-      <Link to={`/user/${user?.id}`} className="flex gap-2 ">
+      <Link
+        to={`/user/${user?.id}`}
+        className="flex gap-2 "
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <img src={Blank_Pfp} alt="User profile picture" className="w-6 h-6 rounded-full" />
         <div className="font-bold">{user?.username}</div>
       </Link>
